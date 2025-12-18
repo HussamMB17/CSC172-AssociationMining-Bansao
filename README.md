@@ -8,7 +8,7 @@
 ---
 
 ## Abstract
-Traditional medical diagnosis relies heavily on the experiential knowledge of practitioners, which can be prone to fatigue or cognitive bias. This project presents **MediMine**, an automated pattern recognition system that leverages Association Rule Mining (ARM) to discover strong correlations between symptom clusters and specific diseases. Using a dataset of 4,920 patient records, we transformed textual symptom logs into transactional data using One-Hot Encoding. We applied the Apriori Algorithm to extract high-confidence diagnostic signatures, identifying distinct symptom patterns for diseases like Pneumonia and Jaundice with over 90% confidence. The system demonstrates that interpretable machine learning can serve as an effective "White Box" decision support tool for preliminary medical screening.
+Traditional medical diagnosis relies heavily on the experiential knowledge of practitioners, which can be prone to fatigue or cognitive bias. This project presents **MediMine**, an automated pattern recognition system that leverages Association Rule Mining (ARM) to discover strong correlations between symptom clusters and specific diseases. Using a dataset of 4,920 patient records, we transformed textual symptom logs into transactional data using One-Hot Encoding. We applied the Apriori Algorithm to extract high-confidence diagnostic signatures, identifying distinct symptom patterns for diseases like Abnormal Menstruation with over 90% confidence. The system demonstrates that interpretable machine learning can serve as an effective "White Box" decision support tool for preliminary medical screening.
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -102,10 +102,11 @@ To find the "Sweet Spot" for diagnosis, we tested different sensitivity levels.
 ### Visualizations
 
 **Figure 1: Symptom-Disease Network Graph**
-*(Clusters show how specific symptoms link to diseases)*
+(Clusters show how specific symptoms link to diseases)
+![Network Graph](results/network_graph.png)
 
 **Figure 2: Support vs. Confidence**
-
+![Support vs Confidence](results/visualization.png)
 ---
 
 ## Discussion
