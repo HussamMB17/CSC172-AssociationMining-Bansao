@@ -142,3 +142,9 @@ To reproduce these results:
 1.  Agrawal, R., & Srikant, R. (1994). "Fast algorithms for mining association rules." *Proc. 20th Int. Conf. Very Large Data Bases*.
 2.  Tomar, D., & Agarwal, S. (2013). "A survey on Data Mining approaches for Healthcare." *International Journal of Bio-Science and Bio-Technology*.
 3.  Ilayaraja, M., & Meyyappan, T. (2013). "Mining Medical Data to Identify Frequent Diseases using Apriori Algorithm." *International Conference on Pattern Recognition*.
+
+---
+
+## 🌐 Project Website
+This project is hosted on GitHub Pages. You can view the full documentation and results here:
+👉 **[View MediMine Project Site](https://HussamMB17.github.io/CSC172-AssociationMining-Bansao/)**
