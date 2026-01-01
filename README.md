@@ -1,10 +1,6 @@
 # MediMine: Automating Symptom-Disease Prediction using Association Rule Mining
 
-<<<<<<< HEAD
 **CSC172 Data Mining and Analysis Final Project** 
-=======
-**CSC172 Data Mining and Analysis Final Project**  
->>>>>>> a2f101488555ba9983282f1eb02f0ec096c052fa
 **Student:** Hussam M. Bansao  
 **Semester:** AY 2025-2026 Sem 1  
 
