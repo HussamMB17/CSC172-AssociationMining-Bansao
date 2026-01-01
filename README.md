@@ -1,163 +1,138 @@
 # MediMine: Automating Symptom-Disease Prediction using Association Rule Mining
 
-**CSC172 Data Mining and Analysis Final Project**
-**Mindanao State University - Iligan Institute of Technology**
-**Student:** Hussam M. Bansao, 2022-0484  
-**Semester:** AY 2025-2026 Sem 1
+**CSC172 Data Mining and Analysis Final Project** **Mindanao State University - Iligan Institute of Technology** **Student:** Hussam M. Bansao  
+**Semester:** AY 2025-2026 Sem 1  
+
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![Library](https://img.shields.io/badge/Library-Mlxtend-orange.svg)](http://rasbt.github.io/mlxtend/)
+[![Status](https://img.shields.io/badge/Status-Completed-green.svg)]()
 
 ---
 
-## Abstract
-Traditional medical diagnosis relies heavily on the experiential knowledge of practitioners, which can be prone to fatigue or cognitive bias. This project presents **MediMine**, an automated pattern recognition system that leverages Association Rule Mining (ARM) to discover strong correlations between symptom clusters and specific diseases. Using a dataset of 4,920 patient records, we transformed textual symptom logs into transactional data using One-Hot Encoding. We applied the Apriori Algorithm to extract high-confidence diagnostic signatures, identifying distinct symptom patterns for diseases like Abnormal Menstruation with over 90% confidence. The system demonstrates that interpretable machine learning can serve as an effective "White Box" decision support tool for preliminary medical screening.
+## 📄 Abstract
+Traditional medical diagnosis often relies on "Black Box" AI models or manual doctor experience. **MediMine** is a "White Box" decision support system that uses **Association Rule Mining (ARM)** to scientifically validate relationships between symptoms and diseases. 
 
-## Table of Contents
-1. [Introduction](#introduction)
-2. [Related Work](#related-work)
-3. [Methodology](#methodology)
-4. [Experiments & Results](#experiments--results)
-5. [Discussion](#discussion)
-6. [Ethical Considerations](#ethical-considerations)
-7. [Installation](#installation)
-8. [References](#references)
+Using a dataset of **4,920 patient records**, we implemented an ETL pipeline to transform raw symptom logs into transactional data. By applying the **Apriori Algorithm** and optimizing for **Lift**, we successfully filtered out generic noise (like "fatigue") to identify **2,685 high-quality diagnostic signatures**. The system identified complex conditions like *Abnormal Menstruation* with 100% confidence based on specific symptom clusters.
+
+## 📑 Table of Contents
+- [Project Overview](#-project-overview)
+- [Methodology](#-methodology)
+- [Experiments & Tuning](#-experiments--tuning)
+- [Key Results](#-key-results)
+- [Visualizations](#-visualizations)
+- [Challenges & Solutions](#-challenges--solutions)
+- [Installation](#-installation)
+- [References](#-references)
 
 ---
 
-## Introduction
+## 🔍 Project Overview
 
 ### Problem Statement
-In developing regions like the Philippines, access to immediate healthcare is often limited. Patients frequently resort to self-medication based on incomplete knowledge, leading to misdiagnosis. There is a critical need for automated systems that can mine historical medical data to provide scientific, probability-based probabilities for diseases based on observed symptoms.
+In developing healthcare systems, initial screening is a bottleneck. Patients often ignore specific combinations of symptoms that serve as early warning signs. We need a system that can automatically learn these "If-Then" rules from historical data to assist in preliminary diagnosis.
 
 ### Objectives
-1.  **Data Transformation:** Convert "wide" textual symptom records into a sparse boolean matrix suitable for algorithm processing.
-2.  **Pattern Discovery:** Use the **Apriori Algorithm** to uncover frequent itemsets that map co-occurring symptoms to specific disease labels.
-3.  **Rule Evaluation:** Optimize the diagnostic rules using **Lift** (correlation strength) to filter out generic symptoms like "Fatigue" and focus on specific disease indicators.
+1.  **Data Transformation:** Convert chaotic, textual symptom lists into a structured boolean matrix.
+2.  **Pattern Discovery:** Use Apriori to find frequent itemsets (symptom clusters).
+3.  **Rule Optimization:** Solve the "Rule Explosion" problem to reduce noise and find statistically significant disease indicators.
 
 ---
 
-## Related Work
+## ⚙️ Methodology
 
-* **Ilayaraja & Meyyappan (2013):** Applied frequent itemset mining to heart disease datasets. Their study confirmed that ARM could identify risk factors (e.g., Age > 50 AND Cholesterol > 200) that decision trees missed, validating the use of Apriori for medical risk assessment.
-* **Tomar et al. (2020):** Proposed a "White Box" approach to medical diagnosis using Association Rules. Unlike Neural Networks, which provide no explanation, their rule-based system allowed doctors to verify *why* a diagnosis was suggested, a feature critical for clinical trust.
-* **Research Gap:** While many studies focus on chronic diseases (Heart/Diabetes), fewer focus on acute tropical diseases common in the dataset (Malaria, Dengue). MediMine bridges this by applying ARM to a broad spectrum of 41 distinct conditions.
-
----
-
-## Methodology
-
-### Dataset
+### 1. Dataset
 * **Source:** [Disease Symptom Prediction (Kaggle)](https://www.kaggle.com/datasets/karthikudyawar/disease-symptom-prediction)
-* **Content:** 4,920 Patient Records covering 41 Diseases.
-* **Preprocessing:**
-    * **Cleaning:** Removal of underscores (`stomach_pain` → `stomach pain`).
-    * **Transformation:** Conversion of list data into a One-Hot Encoded Boolean Matrix via `TransactionEncoder`.
+* **Volume:** 4,920 Transactions covering 41 distinct diseases.
+* **Attributes:** 132 Unique symptoms (e.g., *chills, vomiting, joint_pain*).
 
-### Architecture
-The pipeline consists of:
-1.  **Ingestion** (Pandas Loading)
-2.  **Preprocessing** (String Normalization & Transaction Melting)
-3.  **Mining Engine** (Apriori Algorithm via `mlxtend`)
-4.  **Rule Generation** (Filtering by Confidence > 50% and Lift > 1.2)
-5.  **Visualization** (Network Graphing via `networkx`)
-
-### Mining Code Snippet
-*Excerpt from `notebooks/02_Association_Mining.ipynb`*
-```python
-from mlxtend.frequent_patterns import apriori, association_rules
-
-# 1. Generate Frequent Itemsets (Min Support 1%)
-frequent_itemsets = apriori(df_encoded, min_support=0.01, use_colnames=True)
-
-# 2. Generate Rules (Confidence > 50%)
-rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.5)
-
-# 3. Filter for Strong Correlations (Lift > 1.2)
-strong_rules = rules[rules['lift'] > 1.2].sort_values(by='lift', ascending=False)
-
-```
+### 2. Architecture Pipeline
+The project follows a standard Data Mining pipeline:
+1.  **Ingestion:** Loading raw CSV data.
+2.  **Cleaning:** Removing formatting errors (underscores) and handling `NaN` values.
+3.  **Encoding:** Using `TransactionEncoder` to perform One-Hot Encoding.
+4.  **Mining:** Running the **Apriori Algorithm** to generate frequent itemsets.
+5.  **Evaluation:** Filtering rules based on **Confidence** and **Lift**.
 
 ---
 
-## Experiments & Results
+## 🧪 Experiments & Tuning
 
-To find the "Sweet Spot" for diagnosis, we tested different sensitivity levels.
+A major challenge in ARM is "Rule Explosion"—finding too many obvious rules. We conducted a sensitivity analysis to find the optimal hyperparameters.
 
-### Metrics Comparison
+### Metrics Comparison Table
 
-| Setting | Min Support | Min Confidence | Total Rules | Interpretation |
-| --- | --- | --- | --- | --- |
-| **Loose** | 0.005 (0.5%) | 0.3 (30%) | 1,200+ | Too much noise; creates weak associations. |
-| **Balanced** | **0.01 (1%)** | **0.5 (50%)** | **42** | **Optimal.** Captured distinct disease signatures. |
-| **Strict** | 0.05 (5%) | 0.8 (80%) | 0 | Failed to detect rare diseases. |
+| Setting | Min Support | Min Confidence | Lift Threshold | Total Rules | Interpretation |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Loose** | 0.01 (1%) | 0.5 (50%) | > 1.2 | **20,047** | **Rule Explosion.** The model was overwhelmed by generic symptoms like Fatigue (39% frequency), creating "noise." |
+| **Strict** | 0.10 (10%) | 0.9 (90%) | > 3.0 | **0** | **Too Strict.** Since specific diseases are rare (~2.4% of data), this setting filtered out everything. |
+| **Balanced** | **0.03 (3%)** | **0.7 (70%)** | **> 2.0** | **2,685** | **Optimal.** Successfully filtered out generic noise to isolate specific disease signatures. |
 
-### Interpretation
+> **Decision:** We selected the **Balanced Model (3% Support, Lift > 2.0)** for the final results.
 
-* **Loose Mode:** Resulted in obvious, unhelpful rules like `{Fatigue} -> {Common Cold}`.
-* **Strict Mode:** Missed diseases like *Hypoglycemia* which appear less frequently in the dataset.
-* **Selected Model (Balanced):** We utilized 1% Support. This successfully identified complex rules such as:
-> **Rule:** `{vomiting, breathlessness, phlegm} -> {Pneumonia}`
-> **Confidence:** 91% | **Lift:** 2.3
+---
 
+## 📊 Key Results
 
+The mining engine identified highly specific rules with strong predictive power.
 
-### Visualizations
+### Top Discovered Rule (Example)
+One of the strongest patterns discovered was for **Abnormal Menstruation**:
 
-**Figure 1: Symptom-Disease Network Graph**
-(Clusters show how specific symptoms link to diseases)
+* **Rule:** `{mood swings, irritability, fatigue} -> {Abnormal Menstruation}`
+* **Confidence:** **100%** (Every patient with this cluster had the disease).
+* **Lift:** **20.5** (This is a massive correlation; these symptoms are 20x more likely to appear together in this disease than by random chance).
+
+This validates the model's ability to act as a diagnostic assistant.
+
+---
+
+## 📈 Visualizations
+
+### 1. Network Graph (Top 20 Rules)
+This directed graph visualizes the strongest associations. The arrows point from **Symptoms** to **Diseases**, with the thickness representing the strength (Lift) of the connection.
+
 ![Network Graph](results/network_graph.png)
 
-**Figure 2: Support vs. Confidence**
-![Support vs Confidence](results/visualization.png)
----
+### 2. Support vs. Confidence Scatterplot
+This plot shows the distribution of the 2,685 rules. The points colored in **Yellow/Green** represent rules with the highest Lift (most interesting).
 
-## Discussion
-
-### Strengths
-
-* **Interpretability:** Unlike Deep Learning "Black Boxes," MediMine produces human-readable logic. A doctor can look at the rule `{High Fever, Joint Pain}` and immediately validate it against medical knowledge.
-* **Specificity:** By using the **Lift** metric, we filtered out generic symptoms that occur in every disease (like Nausea), focusing only on symptoms that *strongly imply* a specific condition.
-
-### Limitations
-
-* **Data Bias:** The dataset is synthetic/limited. It treats all symptoms as binary (Yes/No) and does not account for severity (e.g., "Mild Fever" vs "Severe Fever").
-* **Zero-Day Symptoms:** The system cannot diagnose a new disease it has never seen in the training data (e.g., a new COVID variant).
+![Scatter Plot](results/visualization.png)
 
 ---
 
-## Ethical Considerations
+## ⚠️ Challenges & Solutions
 
-* **Not a Doctor:** This system is a **Decision Support Tool**, not a replacement for professional medical advice. Misinterpretation of rules could lead to self-medication errors.
-* **Data Privacy:** The dataset used is anonymized and contains no Personally Identifiable Information (PII), adhering to data privacy standards.
-
----
-
-## Installation
-
-1. **Clone Repository:**
-```bash
-git clone [https://github.com/HussamMB17/CSC172-AssociationMining-Bansao.git](https://github.com/HussamMB17/CSC172-AssociationMining-Bansao.git)
-
-```
-
-
-2. **Install Dependencies:**
-```bash
-pip install -r requirements.txt
-
-```
-
-
-3. **Run Analysis:**
-Open `notebooks/02_Association_Mining.ipynb` in Jupyter Lab or VS Code.
+| Challenge | Description | Solution |
+| :--- | :--- | :--- |
+| **Rule Explosion** | Initial runs at 1% support generated 20,000+ rules, making analysis impossible. | Increased **Support to 3%** and enforced a strict **Lift > 2.0** filter to remove generic correlations. |
+| **Generic Symptoms** | Symptoms like "Fatigue" and "Vomiting" appeared in almost every rule, obscuring specific diseases. | The **Lift Metric** was essential here. We discarded rules with Lift < 2.0, which removed common/generic coincidences. |
+| **Data Formatting** | The raw data was in a "Wide" format (Symptom_1, Symptom_2...), unsuitable for mining. | Implemented a Python script to "melt" the columns into a single list of transactions per patient. |
 
 ---
 
-## References
+## 💻 Installation
 
-1. Agrawal, R., & Srikant, R. (1994). "Fast algorithms for mining association rules." *Proc. 20th Int. Conf. Very Large Data Bases*, 487-499.
-2. Ilayaraja, M., & Meyyappan, T. (2013). "Mining Medical Data to Identify Frequent Diseases using Apriori Algorithm." *International Conference on Pattern Recognition, Informatics and Mobile Engineering (PRIME)*.
-3. Tomar, D., & Agarwal, S. (2013). "A survey on Data Mining approaches for Healthcare." *International Journal of Bio-Science and Bio-Technology*, 5(5), 241-266.
+To reproduce these results:
+
+1.  **Clone the Repository**
+    ```bash
+    git clone [https://github.com/HussamMB17/CSC172-AssociationMining-Bansao.git](https://github.com/HussamMB17/CSC172-AssociationMining-Bansao.git)
+    cd CSC172-AssociationMining-Bansao
+    ```
+
+2.  **Install Dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Run the Notebooks**
+    * Step 1: `notebooks/01_Preprocessing.ipynb` (Prepares the data)
+    * Step 2: `notebooks/02_Mining_Apriori.ipynb` (Generates rules and graphs)
 
 ---
 
-**GitHub Pages:** [View Project Site](https://www.google.com/search?q=https://hussammb17.github.io/CSC172-AssociationMining-Bansao/)
-```
+## 📚 References
+
+1.  Agrawal, R., & Srikant, R. (1994). "Fast algorithms for mining association rules." *Proc. 20th Int. Conf. Very Large Data Bases*.
+2.  Tomar, D., & Agarwal, S. (2013). "A survey on Data Mining approaches for Healthcare." *International Journal of Bio-Science and Bio-Technology*.
+3.  Ilayaraja, M., & Meyyappan, T. (2013). "Mining Medical Data to Identify Frequent Diseases using Apriori Algorithm." *International Conference on Pattern Recognition*.

@@ -8,7 +8,7 @@
 |-----------|--------|-------|
 | Dataset Preparation | ✅ Completed | 4,920 transactions cleaned & encoded |
 | Initial Mining | ✅ Completed | Apriori algorithm execution successful |
-| Rule Evaluation | ✅ In Progress | Filtering rules by Lift metric |
+| Rule Evaluation | ✅ Completed | Filtering rules by Lift metric |
 | Visualization | ✅ Completed | Network Graph generated |
 
 ## 1. Dataset Progress
