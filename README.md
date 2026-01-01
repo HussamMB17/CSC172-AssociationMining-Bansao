@@ -1,6 +1,7 @@
 # MediMine: Automating Symptom-Disease Prediction using Association Rule Mining
 
-**CSC172 Data Mining and Analysis Final Project** **Mindanao State University - Iligan Institute of Technology** **Student:** Hussam M. Bansao  
+**CSC172 Data Mining and Analysis Final Project** 
+**Student:** Hussam M. Bansao  
 **Semester:** AY 2025-2026 Sem 1  
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
@@ -97,6 +98,11 @@ This directed graph visualizes the strongest associations. The arrows point from
 This plot shows the distribution of the 2,685 rules. The points colored in **Yellow/Green** represent rules with the highest Lift (most interesting).
 
 ![Scatter Plot](results/visualization.png)
+
+### 3. Rule Strength Heatmap
+This heatmap details the **Top 10 Rules** by Lift. The darker the blue, the stronger the correlation. You can see that specific clusters (like *Mood Swings + Irritability*) define distinct diseases with high certainty.
+
+![Heatmap](results/heatmap.png)
 
 ---
 
