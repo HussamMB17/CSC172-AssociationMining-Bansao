@@ -1,8 +1,7 @@
 # MediMine: Automating Symptom-Disease Prediction using Association Rule Mining
 
-**CSC172 Data Mining and Analysis Final Project** 
-**Student:** Hussam M. Bansao  
-**Semester:** AY 2025-2026 Sem 1  
+**CSC172 Data Mining and Analysis Final Project** **Student:** Hussam M. Bansao  
+**Semester:** AY 2025-2026 Sem 1  
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![Library](https://img.shields.io/badge/Library-Mlxtend-orange.svg)](http://rasbt.github.io/mlxtend/)
@@ -33,9 +32,9 @@ Using a dataset of **4,920 patient records**, we implemented an ETL pipeline to 
 In developing healthcare systems, initial screening is a bottleneck. Patients often ignore specific combinations of symptoms that serve as early warning signs. We need a system that can automatically learn these "If-Then" rules from historical data to assist in preliminary diagnosis.
 
 ### Objectives
-1.  **Data Transformation:** Convert chaotic, textual symptom lists into a structured boolean matrix.
-2.  **Pattern Discovery:** Use Apriori to find frequent itemsets (symptom clusters).
-3.  **Rule Optimization:** Solve the "Rule Explosion" problem to reduce noise and find statistically significant disease indicators.
+1.  **Data Transformation:** Convert chaotic, textual symptom lists into a structured boolean matrix.
+2.  **Pattern Discovery:** Use Apriori to find frequent itemsets (symptom clusters).
+3.  **Rule Optimization:** Solve the "Rule Explosion" problem to reduce noise and find statistically significant disease indicators.
 
 ---
 
@@ -48,11 +47,16 @@ In developing healthcare systems, initial screening is a bottleneck. Patients of
 
 ### 2. Architecture Pipeline
 The project follows a standard Data Mining pipeline:
-1.  **Ingestion:** Loading raw CSV data.
-2.  **Cleaning:** Removing formatting errors (underscores) and handling `NaN` values.
-3.  **Encoding:** Using `TransactionEncoder` to perform One-Hot Encoding.
-4.  **Mining:** Running the **Apriori Algorithm** to generate frequent itemsets.
-5.  **Evaluation:** Filtering rules based on **Confidence** and **Lift**.
+1.  **Ingestion:** Loading raw CSV data.
+2.  **Cleaning:** Removing formatting errors (underscores) and handling `NaN` values.
+3.  **Encoding:** Using `TransactionEncoder` to perform One-Hot Encoding.
+4.  **Mining:** Running the **Apriori Algorithm** to generate frequent itemsets.
+5.  **Evaluation:** Filtering rules based on **Confidence** and **Lift**.
+
+### 3. Data Distribution (EDA)
+Before mining, we analyzed the dataset to identify the most prevalent symptoms. As shown below, generic symptoms like *Fatigue* and *Vomiting* dominate the dataset. This high frequency necessitated the use of the **Lift Metric** to differentiate between common noise and specific disease patterns.
+
+![Symptom Distribution](results/symptom_distribution.png)
 
 ---
 
@@ -116,32 +120,37 @@ This heatmap details the **Top 10 Rules** by Lift. The darker the blue, the stro
 
 ---
 
+## Final Video Demo
+> **[Click here to watch the project walkthrough video](demo/CSC172_Bansao_Final.mp4)**
+
+---
+
 ## 💻 Installation
 
 To reproduce these results:
 
-1.  **Clone the Repository**
-    ```bash
-    git clone [https://github.com/HussamMB17/CSC172-AssociationMining-Bansao.git](https://github.com/HussamMB17/CSC172-AssociationMining-Bansao.git)
-    cd CSC172-AssociationMining-Bansao
-    ```
+1.  **Clone the Repository**
+    ```bash
+    git clone [https://github.com/HussamMB17/CSC172-AssociationMining-Bansao.git](https://github.com/HussamMB17/CSC172-AssociationMining-Bansao.git)
+    cd CSC172-AssociationMining-Bansao
+    ```
 
-2.  **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
+2.  **Install Dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-3.  **Run the Notebooks**
-    * Step 1: `notebooks/01_Preprocessing.ipynb` (Prepares the data)
-    * Step 2: `notebooks/02_Mining_Apriori.ipynb` (Generates rules and graphs)
+3.  **Run the Notebooks**
+    * Step 1: `notebooks/01_Preprocessing.ipynb` (Prepares the data)
+    * Step 2: `notebooks/02_Mining_Apriori.ipynb` (Generates rules and graphs)
 
 ---
 
 ## 📚 References
 
-1.  Agrawal, R., & Srikant, R. (1994). "Fast algorithms for mining association rules." *Proc. 20th Int. Conf. Very Large Data Bases*.
-2.  Tomar, D., & Agarwal, S. (2013). "A survey on Data Mining approaches for Healthcare." *International Journal of Bio-Science and Bio-Technology*.
-3.  Ilayaraja, M., & Meyyappan, T. (2013). "Mining Medical Data to Identify Frequent Diseases using Apriori Algorithm." *International Conference on Pattern Recognition*.
+1.  Agrawal, R., & Srikant, R. (1994). "Fast algorithms for mining association rules." *Proc. 20th Int. Conf. Very Large Data Bases*.
+2.  Tomar, D., & Agarwal, S. (2013). "A survey on Data Mining approaches for Healthcare." *International Journal of Bio-Science and Bio-Technology*.
+3.  Ilayaraja, M., & Meyyappan, T. (2013). "Mining Medical Data to Identify Frequent Diseases using Apriori Algorithm." *International Conference on Pattern Recognition*.
 
 ---
 
