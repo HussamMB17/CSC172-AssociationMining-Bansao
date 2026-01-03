@@ -1,0 +1,4 @@
+Setting,Min Support,Min Confidence,Lift Threshold,Total Rules,Interpretation
+Loose,0.01 (1%),0.5 (50%),> 1.2,"20,047",Rule Explosion (Too much noise)
+Balanced,0.03 (3%),0.7 (70%),> 2.0,"2,685",Optimal (High quality)
+Strict,0.10 (10%),0.9 (90%),> 3.0,0,Too Strict (No patterns)
