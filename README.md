@@ -1,7 +1,9 @@
 # MediMine: Automating Symptom-Disease Prediction using Association Rule Mining
 
-**CSC172 Data Mining and Analysis Final Project** **Student:** Hussam M. Bansao  
-**Semester:** AY 2025-2026 Sem 1  
+**CSC172 Data Mining and Analysis Final Project** *Mindanao State University - Iligan Institute of Technology*
+
+**Student:** Hussam M. Bansao, 2022-0484
+**Semester:** AY 2025-2026 Sem 1
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![Library](https://img.shields.io/badge/Library-Mlxtend-orange.svg)](http://rasbt.github.io/mlxtend/)
